@@ -5,9 +5,10 @@
 
     <meta charset="UTF-8" />
     <meta name="author" content="Liam Owen" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link href="libs/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="libs/vendors/leaflet/leaflet.css" rel="stylesheet" type="text/css" />
     <link href="libs/css/index.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
@@ -15,10 +16,7 @@
         <h1 id="title">Gazetteer</h1>
         <div class="d-flex justify-content-center">
           <select class="form-select" aria-label="Default select example">
-            <option selected>Select Country</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected id="select">Select Country To View</option>
           </select>
         </div>
       </header>
@@ -50,8 +48,7 @@
         Exchange Rate
       </button>
     </div>
-    </div>
-    </div>
+ 
         <!-- The Modal -->
         <div class="modal fade" id="myModal">
           <div class="modal-dialog modal-dialog-centered">
@@ -86,13 +83,15 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
-    </div>
+      <div id="map">
+
+      </div>
 
     <script src="libs/vendors/jquery/jquery.js"></script>
-    <script src="libs/js/script.js"></script>
     <script src="libs/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="libs/vendors/leaflet/leaflet.js"></script>
+    <script src="libs/vendors/leaflet/leaflet-providers.js"></script>
+    <script src="libs/js/script.js"></script>
   </body>
 </html>
