@@ -15,7 +15,7 @@
       <header>
         <h1 id="title">Gazetteer</h1>
         <div class="d-flex justify-content-center">
-          <select class="form-select" aria-label="Default select example">
+          <select class="form-select" id="selectForm" aria-label="Default select example">
             <option selected id="select">Select Country To View</option>
           </select>
         </div>
@@ -35,7 +35,7 @@
         type="button"
         class="btn btn-default w-100"
         data-toggle="modal"
-        data-target="#myModal"
+        data-target="#myModal2"
       >
         Weather
       </button>
@@ -43,35 +43,38 @@
         type="button"
         class="btn btn-default w-100"
         data-toggle="modal"
-        data-target="#myModal"
+        data-target="#myModal3"
       >
         Exchange Rate
       </button>
     </div>
  
-        <!-- The Modal -->
+        <!-- Info Modal -->
         <div class="modal fade" id="myModal">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-              <!-- Modal Header -->
+              <!-- Info Modal Header -->
               <div class="modal-header">
-                <h4 class="modal-title">Country Info</h4>
+                <h4 class="modal-title" id="modalHead"></h4>
+                <img src="" id="flag" height="50" width="75">
                 <button type="button" class="close" data-dismiss="modal">
                   &times;
                 </button>
               </div>
 
-              <!-- Modal body -->
+              <!-- Info Modal body -->
               <div class="modal-body">
                 <h5 id="popHeading">Population</h5>
-                <p id="popBody">100,000</p>
+                <p id="popBody"></p>
                 <h5 id="capHeading">Capital</h5>
-                <p id="capBody">St Helens</p>
-                <h5 id="wikiHeading">Wikipedia Link</h5>
-                <p id="wikiBody">St Helens</p>
+                <p id="capBody"></p>
+                <h5 id="currenciesHeading">Currencies</h5>
+                <p id="currenciesBody"></p>
+                <h5 id="langHeading">Language(s) spoken</h5>
+                <p id="langBody"></p>
               </div>
 
-              <!-- Modal footer -->
+              <!-- Info Modal footer -->
               <div class="modal-footer">
                 <button
                   type="button"
@@ -84,6 +87,94 @@
             </div>
           </div>
       </div>
+
+      <!-- Modal 2 Weather-->
+
+      <div class="modal fade" id="myModal2">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <!-- Weather Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Weather</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+
+            <!-- Weather Modal body -->
+            <div class="col-6">
+            <div class="modal-body">
+              <h4 id="weatherToday">Today</h4>
+              <h6>Currently</h6>
+              <img id="icon1" src="">
+              <p id="weatherDescription1"></p>
+              <p id="currentTemp1"><span>&#8451;</span></p>
+              <h6>Average Temperatures</h6>
+              <p id="tempDay1"><span>&#8451;</span></p>
+              <p id="tempNight1"><span>&#8451;</span></p>
+            </div>
+          </div class="col-6">
+              <h4 id="weatherTomorrow">Tomorrow</h4>
+              <img id="icon2" src="">
+              <p id="weatherDescription2"></p>
+              <p id="tempDay2"><span>&#8451;</span></p>
+              <p id="tempNight2"><span>&#8451;</span></p>
+            </div>
+            </div>
+
+            <!-- Weather Modal footer -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <!-- Modal 3 Exchange Rates-->
+
+    <div class="modal fade" id="myModal3">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <!-- ER Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Exchange Rates</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+
+            <!-- ER Modal body -->
+            <div class="modal-body">
+              <h5>Exchange rate</h5>
+              <p>The current exhange rate is: </p><br>
+              <label for="currnecy">Choose your currency:</label>
+              <select name="currency" id="currency"> 
+                <option selected id="currencyOption">Select Currency</option>
+              </select><br>
+              <label for="amountToExchange">Enter the amount in £ you wish to echange</label>
+              <input name="amountToExchange" id="amountToExchange" type="number">
+              <p>You will have: </p>
+              </div>
+
+            <!-- ER Modal footer -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
       <div id="map">
 
       </div>
@@ -92,6 +183,7 @@
     <script src="libs/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="libs/vendors/leaflet/leaflet.js"></script>
     <script src="libs/vendors/leaflet/leaflet-providers.js"></script>
+        <script src="libs/vendors/moment/moment.js"></script>
     <script src="libs/js/script.js"></script>
   </body>
 </html>
