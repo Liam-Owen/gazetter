@@ -151,15 +151,14 @@
 
             <!-- ER Modal body -->
             <div class="modal-body">
-              <h5>Exchange rate</h5>
-              <p>The current exhange rate is: </p><br>
+              <p id="currExchange"></p>
               <label for="currnecy">Choose your currency:</label>
               <select name="currency" id="currency"> 
                 <option selected id="currencyOption">Select Currency</option>
               </select><br>
-              <label for="amountToExchange">Enter the amount in £ you wish to echange</label>
+              <label for="amountToExchange">Enter the amount you wish to exchange</label>
               <input name="amountToExchange" id="amountToExchange" type="number">
-              <p>You will have: </p>
+              <p id="convAmount">You will have: </p>
               </div>
 
             <!-- ER Modal footer -->
@@ -184,6 +183,7 @@
     <script src="libs/vendors/leaflet/leaflet.js"></script>
     <script src="libs/vendors/leaflet/leaflet-providers.js"></script>
         <script src="libs/vendors/moment/moment.js"></script>
+        <script src="libs/vendors/money.js/money.js"></script>
     <script src="libs/js/script.js"></script>
   </body>
 </html>

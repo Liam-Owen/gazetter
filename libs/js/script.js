@@ -28,7 +28,24 @@ let currencyCode;
 let currencyName;
 let lon;
 let lat;
+let names = [];
+let codes = [];
+let selectMenu = [];
+
+
+
+
 //Ajax call to get all country names to populate the select form and display the data
+$.ajax({
+    url:'libs/php/countryBorders.php',
+    type:'POST',
+    dataType: 'json',
+    data:{},
+    success: function(data){
+        console.log(data);
+    }
+
+})
 
 $.ajax({
     url: 'libs/php/restCountries.php',
@@ -47,12 +64,42 @@ $.ajax({
                 
                 index++;
             })
-
+                
             // Iterates through the data and finds the index relating to the country selected, this can then be used to pull all of the data for that country 
             $('#selectForm').on('change', () => {
-            console.log($('#selectForm').val());
+
+                $.each(result.data, function(index, value) {
+                    
+                    if($.inArray(value.currencies[0].name, names) == -1)
+                    {
+
+                        names.push(value.currencies[0].name);
+                        
+                    }
+                });
+                $.each(result.data, function(index, value) {
+                    
+                    if($.inArray(value.currencies[0].code, codes) == -1)
+                    {
+
+                        codes.push(value.currencies[0].code);
+                        
+                    }
+                });
+
+                $.each(names, (index, item) => { 
+                    
+                  
+                    $('#currency').append($('<option>').text(item).attr('value', codes[index]));
+                        
+                        index++;
+
+                    })
+                    console.log(names);
+                    console.log(codes);
+            
             for(let i = 0; i < result.data.length; i++){
-           
+                
 
                 if(result.data[i].alpha3Code === $('#selectForm').val()) {
                     
@@ -62,11 +109,11 @@ $.ajax({
                     document.getElementById('capBody').innerHTML = result.data[i].capital;
                     document.getElementById('langBody').innerHTML = " ";
                     document.getElementById('currenciesBody').innerHTML = " ";
+                    
                     lat = result.data[i].latlng[0];
                     lon = result.data[i].latlng[1];
                     currencyCode = result.data[i].currencies[0].code;
                     currencyName = result.data[i].currencies[0].name;
-                    
                     
                     for(let j = 0; j <result.data[i].languages.length; j++){
                         $('#langBody').append(result.data[i].languages[j].name + ", ");
@@ -74,20 +121,23 @@ $.ajax({
                     for(let k = 0; k <result.data[i].currencies.length; k++){
                         $('#currenciesBody').append(result.data[i].currencies[k].name + ", ");
                     }
-  
                 }
             }
-          
-          
-           })
-
+            })
         }
+            
+            },
     
-    },
+
+            
+            
+
+
     error: function(jqXHR, textStatus, errorThrown) {
         // your error code
     }
-}); 
+});
+    
 
 // OpenWeather Ajax call
 $('#selectForm').on('change', () => {
@@ -151,31 +201,33 @@ $.ajax({
         console.log(result);
       
         
-        const currencyNames = Object.keys(result.data.rates);
-
         if (result.status.name == 'ok') {
-            $.each(currencyNames, (index, item) => { 
-                $('#currencyOption').after($('<option>').text(item).attr('value', item));
-                
-                index++;
-            })
-            $('#currency').on('change', () => {
 
-               let selCurrency = $('#currency').val()
-
-                let selExchangeRate = result.data.rates[test];
-                let UsdConversion = result.data.rates.usd;
-                console.log(selExchangeRate);
-
-                
-                for(let i = 0; i < result.data.rates.length; i++){
-
-                    
-                }
-            })
+        document.getElementById('currExchange').innerHTML= `Convert your currency to ${currencyName} below`;
         
+    $('#amountToExchange').on('change', () => {
+        if ( typeof fx !== "undefined" && fx.rates ) {
+            fx.rates = result.data.rates;
+            fx.base = result.data.base;
+        } else {
+            // If not, apply to fxSetup global:
+            var fxSetup = {
+                rates : result.data.rates,
+                base : result.data.base
+            }
         }
-    
+     
+    let selCurrency = $('#currency').val();
+    let input = document.getElementById('amountToExchange').value
+    let value= fx.convert(input, {from: selCurrency, to: currencyCode});
+    console.log(value);
+    let formattedValue = Math.round(value * 100)/100;
+    console.log(formattedValue);
+
+        document.getElementById('convAmount').innerHTML="You will have: " + formattedValue + " "+currencyName;
+    })
+}
+        
            
     },
 
@@ -183,4 +235,5 @@ $.ajax({
         // your error code
     }
 }); 
-});
+})
+
