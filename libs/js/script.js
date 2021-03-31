@@ -25,15 +25,14 @@ function onLocationError(e) {
 map.on('locationerror', onLocationError);
 
 let currencyCode;
-let currencyName;
+let currencyName = [];
 let lon;
 let lat;
 let names = [];
-let codes = [];
 let selectMenu = [];
 
 
-
+const sortObject = obj => Object.keys(obj).sort().reduce((res, key) => (res[key] = obj[key], res), {});
 
 //Ajax call to get all country names to populate the select form and display the data
 $.ajax({
@@ -41,89 +40,70 @@ $.ajax({
     type:'POST',
     dataType: 'json',
     data:{},
-    success: function(data){
-        console.log(data);
-    }
-
-})
-
-$.ajax({
-    url: 'libs/php/restCountries.php',
-    type: 'POST',
-    async:false,
-    dataType: 'json',
-    data: {},
-    success: function(result) {
-        
+    success: function(result){
         console.log(result);
 
         if (result.status.name == 'ok') {
+
+            $.each(result.data.features, (index, item) => {
+             names.push({
+                name: item.properties.name,
+                iso_a3: item.properties.iso_a3
+            });
             
-            $.each(result.data, (index, item) => { 
-                $('#select').after($('<option>').text(item.name).attr('value', item.alpha3Code));
+        })
+
+
+            $.each(names, (index, item) => { 
+
+                $('#select').after($('<option>').text(item.name).attr('value', item.iso_a3));
                 
                 index++;
             })
+    }
+
+}
+})
+
+$('#selectForm').on('change', () => {
+
+    $.ajax({
+    url: 'libs/php/restCountries.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+        code: $('#selectForm').val(),
+    },
+    success: function(result) {
+        console.log(result)
+
+        if (result.status.name == 'ok') {
+            
                 
             // Iterates through the data and finds the index relating to the country selected, this can then be used to pull all of the data for that country 
-            $('#selectForm').on('change', () => {
 
-                $.each(result.data, function(index, value) {
                     
-                    if($.inArray(value.currencies[0].name, names) == -1)
-                    {
-
-                        names.push(value.currencies[0].name);
-                        
-                    }
-                });
-                $.each(result.data, function(index, value) {
-                    
-                    if($.inArray(value.currencies[0].code, codes) == -1)
-                    {
-
-                        codes.push(value.currencies[0].code);
-                        
-                    }
-                });
-
-                $.each(names, (index, item) => { 
-                    
-                  
-                    $('#currency').append($('<option>').text(item).attr('value', codes[index]));
-                        
-                        index++;
-
-                    })
-                    console.log(names);
-                    console.log(codes);
-            
-            for(let i = 0; i < result.data.length; i++){
-                
-
-                if(result.data[i].alpha3Code === $('#selectForm').val()) {
-                    
-                    document.getElementById('modalHead').innerHTML = result.data[i].name;
-                    document.getElementById('flag').setAttribute('src', result.data[i].flag);
-                    document.getElementById('popBody').innerHTML = result.data[i].population;
-                    document.getElementById('capBody').innerHTML = result.data[i].capital;
+                    document.getElementById('modalHead').innerHTML = result.data.name;
+                    document.getElementById('flag').setAttribute('src', result.data.flag);
+                    document.getElementById('popBody').innerHTML = result.data.population;
+                    document.getElementById('capBody').innerHTML = result.data.capital;
                     document.getElementById('langBody').innerHTML = " ";
                     document.getElementById('currenciesBody').innerHTML = " ";
                     
-                    lat = result.data[i].latlng[0];
-                    lon = result.data[i].latlng[1];
-                    currencyCode = result.data[i].currencies[0].code;
-                    currencyName = result.data[i].currencies[0].name;
+                    lat = result.data.latlng[0];
+                    lon = result.data.latlng[1];
+                    currencyCode = result.data.currencies[0].code;
+                    currencyName = result.data.currencies[0].name;
                     
-                    for(let j = 0; j <result.data[i].languages.length; j++){
-                        $('#langBody').append(result.data[i].languages[j].name + ", ");
+                    for(let j = 0; j <result.data.languages.length; j++){
+                        $('#langBody').append(result.data.languages[j].name + ", ");
                     }
-                    for(let k = 0; k <result.data[i].currencies.length; k++){
-                        $('#currenciesBody').append(result.data[i].currencies[k].name + ", ");
+                    for(let k = 0; k <result.data.currencies.length; k++){
+                        $('#currenciesBody').append(result.data.currencies[k].name + ", ");
                     }
-                }
-            }
-            })
+                
+            
+           
         }
             
             },
@@ -137,10 +117,11 @@ $.ajax({
         // your error code
     }
 });
+
     
 
 // OpenWeather Ajax call
-$('#selectForm').on('change', () => {
+
 $.ajax({
     url: 'libs/php/openWeather.php',
     type: 'POST',
@@ -235,5 +216,5 @@ $.ajax({
         // your error code
     }
 }); 
-})
+});
 

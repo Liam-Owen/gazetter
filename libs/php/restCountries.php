@@ -2,7 +2,7 @@
 
 	$executionStartTime = microtime(true) / 1000;
 
-	$url='https://restcountries.eu/rest/v2/all';
+	$url='https://restcountries.eu/rest/v2/alpha/'.$_REQUEST['code'];
 
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
