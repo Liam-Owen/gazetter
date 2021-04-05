@@ -32,7 +32,6 @@ let names = [];
 let selectMenu = [];
 
 
-const sortObject = obj => Object.keys(obj).sort().reduce((res, key) => (res[key] = obj[key], res), {});
 
 //Ajax call to get all country names to populate the select form and display the data
 $.ajax({
@@ -125,7 +124,6 @@ $('#selectForm').on('change', () => {
 $.ajax({
     url: 'libs/php/openWeather.php',
     type: 'POST',
-    async:false,
     dataType: 'json',
     data: {
         lat: lat,
@@ -173,7 +171,6 @@ $.ajax({
 $.ajax({
     url: 'libs/php/exchange.php',
     type: 'POST',
-    async:false,
     dataType: 'json',
     data: {
     },
