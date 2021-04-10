@@ -16,7 +16,8 @@
         <h1 id="title">Gazetteer</h1>
         <div class="d-flex justify-content-center">
           <select class="form-select" id="selectForm" aria-label="Default select example">
-            <option selected id="select">Select Country To View</option>
+            <option selected>Select Country To View</option>
+            <option id="select"></option>
           </select>
         </div>
       </header>
@@ -102,25 +103,29 @@
             </div>
 
             <!-- Weather Modal body -->
-            <div class="col-6">
             <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-6">
               <h4 id="weatherToday">Today</h4>
               <h6>Currently</h6>
-              <img id="icon1" src="">
+              <img class="img-fluid" id="icon1" src="">
               <p id="weatherDescription1"></p>
               <p id="currentTemp1"><span>&#8451;</span></p>
               <h6>Average Temperatures</h6>
               <p id="tempDay1"><span>&#8451;</span></p>
               <p id="tempNight1"><span>&#8451;</span></p>
             </div>
-          </div class="col-6">
+            <div class="col-md-6">
               <h4 id="weatherTomorrow">Tomorrow</h4>
-              <img id="icon2" src="">
+              <img class="img-fluid" id="icon2" src="">
               <p id="weatherDescription2"></p>
               <p id="tempDay2"><span>&#8451;</span></p>
               <p id="tempNight2"><span>&#8451;</span></p>
             </div>
+          </div>
             </div>
+          </div>
 
             <!-- Weather Modal footer -->
             <div class="modal-footer">

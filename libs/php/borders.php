@@ -7,12 +7,11 @@ $executionStartTime = microtime(true) / 1000;
     $result = file_get_contents($file);
     $data = json_decode($result,TRUE);
 
-    $names = array();
-    $codes = array();
+   
 
     for($i=0;$i < count($data['features']);$i++) { 
         
-      $names[]=['name'=>$data['features'][$i]['properties']['name'],'code'=>$data['features'][$i]['properties']['iso_a3']] ;
+      $names[]=[$data['features'][$i]['properties']['name'],$data['features'][$i]['properties']['iso_a3']] ;
 
     }
 

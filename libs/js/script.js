@@ -24,10 +24,10 @@ function onLocationError(e) {
 
 map.on('locationerror', onLocationError);
 
-let currencyCode;
+let currencyCode = [];
 let currencyName = [];
-let lon;
 let lat;
+let lon;
 let names = [];
 let selectMenu = [];
 
@@ -44,18 +44,11 @@ $.ajax({
 
         if (result.status.name == 'ok') {
 
-            $.each(result.data.features, (index, item) => {
-             names.push({
-                name: item.properties.name,
-                iso_a3: item.properties.iso_a3
-            });
-            
-        })
+            console.log(result.data.name);
 
+           $.each(result.data, (index, item) => { 
 
-            $.each(names, (index, item) => { 
-
-                $('#select').after($('<option>').text(item.name).attr('value', item.iso_a3));
+                $('#select').before($('<option>').text(item.name).attr('value', item.code));
                 
                 index++;
             })
@@ -90,7 +83,7 @@ $('#selectForm').on('change', () => {
                     document.getElementById('currenciesBody').innerHTML = " ";
                     
                     lat = result.data.latlng[0];
-                    lon = result.data.latlng[1];
+                    lon = result.data.latlng[1];                 
                     currencyCode = result.data.currencies[0].code;
                     currencyName = result.data.currencies[0].name;
                     
@@ -126,8 +119,8 @@ $.ajax({
     type: 'POST',
     dataType: 'json',
     data: {
-        lat: lat,
-        lon: lon,
+       lat: lat,
+       lon: lon,
     },
     success: function(result) {
         
@@ -214,4 +207,6 @@ $.ajax({
     }
 }); 
 });
+
+
 

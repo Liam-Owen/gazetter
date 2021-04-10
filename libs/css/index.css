@@ -48,4 +48,7 @@ details {
        width: 100vw;
         }
 
- 
+ .weatherIcon {
+   height:10vw;
+   width:10vw;
+ }
